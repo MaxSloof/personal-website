@@ -1,18 +1,16 @@
 # personal-website
 
-Static personal site, hosted on Cloudflare Pages. `public/` is served as the site root.
+Personal site on Cloudflare Workers static assets. `public/` is served as the site root.
 
 | Path | Source |
 |---|---|
 | `/` | `public/index.html` |
-| `/toledo/` | Proxied by `functions/toledo/[[path]].js` from a separate Pages project that deploys `toledo/docs/site` |
+| `/toledo/` | `src/toledo-proxy.js` forwards to the `toledo-landing` Worker (`toledo/docs/site`) through a service binding |
 
 ```sh
 npm run build                 # bundle src/gpu.js (three.js) into public/gpu.js; commit the result
-npx wrangler pages dev --binding TOLEDO_ORIGIN=https://<toledo-project>.pages.dev
-npx wrangler pages deploy
+npx wrangler dev -c wrangler.toml -c ../toledo/wrangler.toml   # local preview with /toledo/
+npx wrangler deploy           # manual deploy
 ```
 
-Cloudflare Pages git integration: build command empty, output directory `public`.
-
-Set `TOLEDO_ORIGIN` under `[vars]` in `wrangler.toml` (Pages ignores dashboard variables when that file exists) to the Toledo project's origin; `/toledo/` returns 500 without it. That project deploys `toledo/docs/site` (no build command), and the function passes requests through to it.
+Workers Builds settings: build command empty, deploy command `npx wrangler deploy`, root directory empty. Deploy `toledo-landing` first: the service binding fails if that Worker doesn't exist yet.

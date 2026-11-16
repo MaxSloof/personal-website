@@ -1,9 +1,14 @@
 name = "personal-website"
+main = "src/toledo-proxy.js"
 compatibility_date = "2026-11-16"
-pages_build_output_dir = "./public"
 
-[vars]
-TOLEDO_ORIGIN = "https://toledo-landing.maxsloof.workers.dev/"
+[assets]
+directory = "./public"
+run_worker_first = ["/toledo", "/toledo/*"]
+
+[[services]]
+binding = "TOLEDO"
+service = "toledo-landing"
 
 [observability.logs]
 enabled = true
