@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Max Sloof</title>
+<meta name="description" content="Max Sloof's personal website.">
+<meta name="theme-color" content="#070707">
+<link rel="preload" href="/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: "Geist"; src: url("/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+:root {
+  color-scheme: dark;
+  --bg: #070707;
+  --fg: #f4f4f3;
+  --muted: #8c8c89;
+  --faint: #1e1e1d;
+  --line: #2a2a28;
+  --green: #4ade80;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gutter: clamp(20px, 5vw, 56px);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / .12) 1px, transparent 0);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 10%, transparent 75%);
+}
+#gpu { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+@media (max-width: 720px) { #gpu { opacity: .45; } }
+a { color: inherit; text-decoration: none; }
+.label { font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header, footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px var(--gutter);
+}
+.brand { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+.status { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
+.status i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(56px, 12vh, 140px) var(--gutter) clamp(56px, 10vh, 120px);
+}
+h1 { font-weight: 600; font-size: clamp(48px, 8.4vw, 120px); line-height: .98; letter-spacing: -.055em; }
+h1 .dim { color: #5c5c5a; }
+h1 .dot { color: var(--green); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.lede { margin-top: clamp(24px, 3.5vh, 36px); max-width: 34ch; text-wrap: pretty; font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); }
+.lede strong { color: var(--fg); font-weight: 500; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; margin-top: 32px; }
+.cta { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; background: var(--fg); color: var(--bg); border-radius: 999px; font-size: 14px; font-weight: 500; transition: opacity .2s; }
+.cta span { transition: transform .2s; }
+.cta:hover { opacity: .88; }
+.cta:hover span { transform: translateX(3px); }
+.cta:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.text-link { font-size: 14px; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.text-link:hover { color: var(--fg); }
+a.status { transition: border-color .2s; }
+a.status:hover { border-color: var(--muted); }
+.featured { position: relative; z-index: 1; margin: 0 var(--gutter) 28px; padding: 28px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px 32px; background: rgb(7 7 7 / .72); backdrop-filter: blur(6px); border: 1px solid color-mix(in srgb, var(--green) 35%, var(--line)); border-radius: 16px; transition: border-color .2s, background .2s; }
+.featured:hover { border-color: var(--green); background: rgb(14 20 16 / .8); }
+.featured h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 600; letter-spacing: -.04em; line-height: 1.05; margin-top: 8px; }
+.featured p { margin-top: 8px; max-width: 46ch; color: var(--muted); font-size: 16px; }
+.featured .go { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--fg); color: var(--bg); font-size: 22px; transition: transform .2s; }
+.featured:hover .go { transform: translateX(4px); }
+.featured:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+footer { color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+footer a:hover { color: var(--fg); }
+.rise { opacity: 0; transform: translateY(10px); animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+.d1 { animation-delay: .05s; } .d2 { animation-delay: .2s; } .d3 { animation-delay: .35s; } .d4 { animation-delay: .5s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .rise { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="gpu" aria-hidden="true"></canvas>
+<header class="rise d1">
+  <a class="brand" href="/">Max Sloof</a>
+  <a class="status label" href="/toledo/"><i></i>Building Toledo</a>
+</header>
+<main>
+  <h1 class="rise d2">Max<br><span class="dim">Sloof<span class="dot">.</span></span></h1>
+  <p class="lede rise d3">I'm building <strong>Toledo</strong>, a hybrid private AI platform.</p>
+  <div class="meta rise d4">
+    <a class="cta" href="/toledo/">Visit Toledo <span aria-hidden="true">→</span></a>
+    <a class="text-link" href="mailto:maxsloof@gmail.com">Get in touch</a>
+  </div>
+</main>
+<a class="featured rise d4" href="/toledo/">
+  <div>
+    <span class="label">Now building</span>
+    <h2>Toledo</h2>
+    <p>A private AI platform for your own server and your team's laptops. See how it works and join the pilot.</p>
+  </div>
+  <span class="go" aria-hidden="true">→</span>
+</a>
+<footer>
+  <span>© <span id="y">2026</span> Max Sloof</span>
+  <a href="https://github.com/MaxSloof" target="_blank" rel="noopener">GitHub</a>
+</footer>
+<script src="/gpu.js" defer></script>
+<script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+</body>
+</html>
